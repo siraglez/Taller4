@@ -12,12 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:text="Bienvenido"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/btnIrActividadPrincipal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="Ir a Actividad Principal"/>
+        android:text="Ir a Actividad Principal"
+        android:textColor="@color/black" />
 </LinearLayout>

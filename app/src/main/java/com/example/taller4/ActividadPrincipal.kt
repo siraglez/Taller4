@@ -1,74 +1,80 @@
 package com.example.taller4
 
-import android.content.Context
-import android.content.Intent
+import android.graphics.Color
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
-import android.util.Log
-import android.widget.*
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.math.sqrt
 
-class ActividadPrincipal : AppCompatActivity() {
+class ActividadPrincipal : AppCompatActivity(), SensorEventListener {
 
-    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var sensorManager: SensorManager
+    private var acelerometro: Sensor? = null
+    private lateinit var mainLayout: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.actividad_principal)
 
-        // Inicializar el helper de la base de datos
-        dbHelper = DatabaseHelper(this)
+        // Inicializar el SensorManager
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
-        // Recuperar el nombre almacenado desde SharedPreferences
-        val sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
-        val nombreGuardado = sharedPref.getString("nombre_usuario", "") ?: ""
+        // Referencia al layout principal para cambiar el color de fondo
+        mainLayout = findViewById(R.id.layoutPrincipal)
 
-        val editTextNombre = findViewById<EditText>(R.id.editTextNombre)
-        val textViewNombresSQLite = findViewById<TextView>(R.id.textViewNombresSQLite)
-        val btnGuardarSQLite = findViewById<Button>(R.id.btnGuardarSQLite)
-        val btnCargarSQLite = findViewById<Button>(R.id.btnCargarSQLite)
-        val btnConfig = findViewById<Button>(R.id.btnConfig)
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        val textViewProgreso = findViewById<TextView>(R.id.textViewProgreso)
-
-        // Mostrar el nombre guardado
-        editTextNombre.setText(nombreGuardado)
-
-        // Botón para guardar el nombre en SQLite
-        btnGuardarSQLite.setOnClickListener {
-            val nombre = editTextNombre.text.toString()
-            guardarEnBaseDeDatos(nombre)
-            editTextNombre.text.clear()
-            Toast.makeText(this, "Nombre guardado en SQLite", Toast.LENGTH_SHORT).show()
+        // Fragmentos
+        val listaFragment = ListaFragment { elementoSeleccionado ->
+            val detalleFragment =
+                supportFragmentManager.findFragmentById(R.id.fragmentDetalle) as? DetalleFragment
+            detalleFragment?.mostrarDetalle(elementoSeleccionado)
         }
 
-        // Botón para cargar nombres desde SQLite
-        btnCargarSQLite.setOnClickListener {
-            val nombres = cargarDesdeBaseDeDatos()
-            textViewNombresSQLite.text = "Nombres en SQLite:\n${nombres.joinToString("\n")}"
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentLista, listaFragment)
+            .commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Registrar el listener del acelerómetro
+        acelerometro?.also {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
+    }
 
-        // Botón para ir a la configuración
-        btnConfig.setOnClickListener {
-            navigateToConfig()
+    override fun onPause() {
+        super.onPause()
+        // Detener el listener para ahorrar batería
+        sensorManager.unregisterListener(this)
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
+            val x = event.values[0]
+            val y = event.values[1]
+            val z = event.values[2]
+
+            // Calcular la magnitud del vector
+            val aceleracion = sqrt(x * x + y * y + z * z)
+            if (aceleracion > 15) { // Umbral para detectar movimiento
+                cambiarColorFondo()
+            }
         }
-
-        // Indicador de progreso
-        progressBar.visibility = ProgressBar.GONE
-        textViewProgreso.visibility = TextView.GONE
     }
 
-    private fun guardarEnBaseDeDatos(nombre: String) {
-        dbHelper.insertName(nombre)
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        // No se necesita manejar cambios de precisión
     }
 
-    private fun cargarDesdeBaseDeDatos(): List<String> {
-        val nombres = dbHelper.getAllNames()
-        Log.d("ActividadPrincipal", "Nombres cargados: $nombres")
-        return nombres
-    }
-
-    private fun navigateToConfig() {
-        val intent = Intent(this, PantallaConfiguracion::class.java)
-        startActivity(intent)
+    private fun cambiarColorFondo() {
+        val colores = listOf(
+            Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA
+        )
+        mainLayout.setBackgroundColor(colores.random())
     }
 }

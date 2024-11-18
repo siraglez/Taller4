@@ -21,7 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         // Botón para ir a la Actividad Principal
         btnIrActividadPrincipal.setOnClickListener {
-            navigateToMainActivity()
+            val intent = Intent(this, ActividadPrincipal::class.java)
+            startActivity(intent)
         }
     }
 
@@ -32,10 +33,5 @@ class MainActivity : AppCompatActivity() {
             hora in 12..19 -> "Buenas tardes"
             else -> "Buenas noches"
         }
-    }
-
-    private fun navigateToMainActivity() {
-        val intent = Intent(this, ActividadPrincipal::class.java)
-        startActivity(intent)
     }
 }
