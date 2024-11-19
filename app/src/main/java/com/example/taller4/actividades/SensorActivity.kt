@@ -68,9 +68,7 @@ class SensorActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun cambiarColorFondo() {
-        val colores = listOf(
-            Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA
-        )
-        layoutSensor.setBackgroundColor(colores.random())
+        val colores = Color.MAGENTA
+        layoutSensor.setBackgroundColor(colores)
     }
 }
