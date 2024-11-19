@@ -1,4 +1,4 @@
-package com.example.taller4
+package com.example.taller4.fragmentos
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import androidx.fragment.app.Fragment
+import com.example.taller4.R
 
 class ListaFragment(private val onItemSelected: (String, String) -> Unit) : Fragment() {
 

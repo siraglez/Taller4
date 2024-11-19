@@ -1,9 +1,12 @@
-package com.example.taller4
+package com.example.taller4.actividades
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.taller4.fragmentos.DetalleFragment
+import com.example.taller4.fragmentos.ListaFragment
+import com.example.taller4.R
 
 class ActividadPrincipal : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.example.taller4
+package com.example.taller4.actividades
 
 import android.graphics.Color
 import android.hardware.Sensor
@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.example.taller4.R
 import kotlin.math.sqrt
 
 class SensorActivity : AppCompatActivity(), SensorEventListener {
