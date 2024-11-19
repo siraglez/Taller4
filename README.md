@@ -30,7 +30,7 @@ Esta aplicación Android está diseñada para explorar varias funcionalidades av
 ### 2. Persistencia de Datos
 - Los elementos de la lista se almacenan en las **SharedPreferences** del dispositivo para asegurar que la información persista entre sesiones.
 
-### S3. ensores
+### 3. Sensores
 - La **SensorActivity** utiliza el **acelerómetro** para detectar movimientos basándose en la magnitud del vector de aceleración. Si el movimiento supera un umbral, el fondo cambia de color.
 
 ### 4. Widget
