@@ -9,18 +9,21 @@ import androidx.fragment.app.Fragment
 
 class DetalleFragment : Fragment() {
 
-    private lateinit var textViewDetalle: TextView
+    private lateinit var textViewTitulo: TextView
+    private lateinit var textViewDescripcion: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_detalle, container, false)
-        textViewDetalle = view.findViewById(R.id.textViewDetalle)
+        textViewTitulo = view.findViewById(R.id.textViewTitulo)
+        textViewDescripcion = view.findViewById(R.id.textViewDescripcion)
         return view
     }
 
-    fun mostrarDetalle(detalle: String) {
-        textViewDetalle.text = detalle
+    fun mostrarDetalle(titulo: String, descripcion: String) {
+        textViewTitulo.text = titulo
+        textViewDescripcion.text = descripcion
     }
 }

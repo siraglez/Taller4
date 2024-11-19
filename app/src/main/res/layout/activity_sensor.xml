@@ -4,20 +4,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp">
+    android:background="@android:color/white"
+    android:id="@+id/layoutSensor">
 
     <TextView
-        android:id="@+id/textViewSaludo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bienvenido"
-        android:textSize="18sp"/>
+        android:text="Mueve el dispositivo para cambiar el color"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
 
     <Button
-        android:id="@+id/btnIrActividadPrincipal"
+        android:id="@+id/btnVolver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ir a Pantalla Principal"
-        android:backgroundTint="@color/light_blue"
+        android:text="Volver"
+        android:backgroundTint="@color/light_green"
         android:textColor="@color/white"/>
 </LinearLayout>

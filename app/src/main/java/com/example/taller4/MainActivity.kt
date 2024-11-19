@@ -16,13 +16,10 @@ class MainActivity : AppCompatActivity() {
         val textViewSaludo = findViewById<TextView>(R.id.textViewSaludo)
         val btnIrActividadPrincipal = findViewById<Button>(R.id.btnIrActividadPrincipal)
 
-        // Mostrar saludo basado en la hora del día
         textViewSaludo.text = calcularSaludo()
 
-        // Botón para ir a la Actividad Principal
         btnIrActividadPrincipal.setOnClickListener {
-            val intent = Intent(this, ActividadPrincipal::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, ActividadPrincipal::class.java))
         }
     }
 

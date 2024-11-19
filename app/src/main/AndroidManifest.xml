@@ -28,13 +28,15 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Taller4"/>
+
         <activity
-            android:name=".PantallaConfiguracion"
+            android:name="SensorActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Taller4"/>
+            android:theme="@style/Theme.Taller4" />
 
-        <receiver android:name=".WidgetProvider">
+        <receiver android:name=".WidgetProvider"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

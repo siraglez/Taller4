@@ -6,25 +6,28 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
-import kotlin.random.Random
 
 class WidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         for (appWidgetId in appWidgetIds) {
-            // Actualizar el widget
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
     }
 
     companion object {
         private fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-            val widgetText = "Datos: ${Random.nextInt(100)}" // Generar datos aleatorios para mostrar
+            val sharedPref = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+            val elementosString = sharedPref.getString("lista_elementos", "") ?: ""
+            val elementos = if (elementosString.isNotEmpty()) {
+                elementosString.split("|").map { it.split(":")[0] }
+            } else {
+                listOf("No hay elementos")
+            }
 
             val views = RemoteViews(context.packageName, R.layout.widget_layout).apply {
-                setTextViewText(R.id.widgetTextView, widgetText)
+                setTextViewText(R.id.widgetTextView, elementos.joinToString("\n"))
 
-                // Configurar el botón para actualizar los datos
                 val intent = Intent(context, WidgetProvider::class.java).apply {
                     action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
                     putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))

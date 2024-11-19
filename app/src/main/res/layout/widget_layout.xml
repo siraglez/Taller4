@@ -10,17 +10,14 @@
         android:id="@+id/widgetTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Información del Widget"
+        android:text="No hay elementos"
         android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:gravity="center"/>
+        android:textSize="14sp"/>
 
     <Button
         android:id="@+id/widgetButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Actualizar"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@android:color/holo_blue_light"
         android:layout_marginTop="8dp"/>
 </LinearLayout>
