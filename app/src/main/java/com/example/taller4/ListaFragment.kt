@@ -1,7 +1,6 @@
 package com.example.taller4
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,17 +30,22 @@ class ListaFragment(private val onItemSelected: (String, String) -> Unit) : Frag
         // Cargar elementos almacenados en SharedPreferences
         cargarElementos()
 
-        adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, elementos.map { it.first })
+        // Crear el adaptador basado en los títulos de los elementos
+        adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, elementos.map { it.first }.toMutableList())
         listView.adapter = adapter
 
         btnAgregar.setOnClickListener {
             val titulo = inputTitulo.text.toString()
             val descripcion = inputDescripcion.text.toString()
             if (titulo.isNotBlank() && descripcion.isNotBlank()) {
+                // Agregar el nuevo elemento a la lista y guardar
                 elementos.add(Pair(titulo, descripcion))
                 guardarElementos()
-                actualizarWidget()
-                adapter.notifyDataSetChanged()
+
+                // Actualizar el adaptador con los nuevos datos
+                actualizarLista()
+
+                // Limpiar los campos de entrada
                 inputTitulo.text.clear()
                 inputDescripcion.text.clear()
             }
@@ -77,10 +81,10 @@ class ListaFragment(private val onItemSelected: (String, String) -> Unit) : Frag
         }
     }
 
-    private fun actualizarWidget() {
-        val intent = Intent(requireContext(), WidgetProvider::class.java).apply {
-            action = "android.appwidget.action.APPWIDGET_UPDATE"
-        }
-        requireContext().sendBroadcast(intent)
+    private fun actualizarLista() {
+        // Actualiza los datos del adaptador con los nuevos títulos
+        adapter.clear()
+        adapter.addAll(elementos.map { it.first })
+        adapter.notifyDataSetChanged()
     }
 }

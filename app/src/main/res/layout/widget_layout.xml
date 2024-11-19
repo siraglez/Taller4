@@ -4,14 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@android:color/darker_gray">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/widgetTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="No hay elementos"
-        android:textColor="@android:color/white"
+        android:textColor="@color/black"
         android:textSize="14sp"/>
 
     <Button
@@ -19,5 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Actualizar"
+        android:backgroundTint="@color/light_purple"
+        android:textColor="@color/white"
         android:layout_marginTop="8dp"/>
 </LinearLayout>

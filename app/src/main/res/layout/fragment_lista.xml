@@ -21,7 +21,9 @@
         android:id="@+id/btnAgregar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Agregar"/>
+        android:text="Agregar"
+        android:backgroundTint="@color/light_blue"
+        android:textColor="@color/white"/>
 
     <ListView
         android:id="@+id/listView"
